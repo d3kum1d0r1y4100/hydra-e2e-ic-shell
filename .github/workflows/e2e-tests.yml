@@ -11,14 +11,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
         with:
-          repository: ${{ github.event.pull_request.head.repo.full_name }}
-          ref: ${{ github.event.pull_request.head.sha }}
+          ref: refs/pull/${{ github.event.issue.number }}/head
       - name: Setup environment
         run: ./scripts/setup-env.sh
       - name: Run E2E
         run: |
           ./scripts/test.sh
-          make test-e2e
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          CI_TOKEN: ${{ secrets.CI_TOKEN }}
